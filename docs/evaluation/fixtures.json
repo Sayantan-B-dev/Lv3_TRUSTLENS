@@ -1,0 +1,55 @@
+{
+  "schema": "trustlens.evaluation-fixtures/v1",
+  "note": "Inputs and human labels for reproducible evaluation. Labels are dataset expectations, not precomputed TrustLens results. Live sources can change; run the pipeline and record actual outcomes.",
+  "cases": [
+    {
+      "id": "benign-example",
+      "input_type": "url",
+      "input": "https://example.com",
+      "label": "benign",
+      "rationale": "Reserved documentation domain with a straightforward HTTPS page."
+    },
+    {
+      "id": "benign-python",
+      "input_type": "url",
+      "input": "https://www.python.org/",
+      "label": "benign",
+      "rationale": "Well-known open-source project site."
+    },
+    {
+      "id": "benign-wikipedia",
+      "input_type": "url",
+      "input": "https://en.wikipedia.org/wiki/Phishing",
+      "label": "benign",
+      "rationale": "Reference article about phishing; content topic must not be treated as a threat."
+    },
+    {
+      "id": "suspicious-typosquat",
+      "input_type": "url",
+      "input": "https://paypa1.com/login",
+      "label": "suspicious",
+      "rationale": "Digit-for-letter lookalike of a payment brand plus a login path."
+    },
+    {
+      "id": "suspicious-shortener",
+      "input_type": "url",
+      "input": "https://bit.ly/3xample",
+      "label": "suspicious",
+      "rationale": "Shortener hides the destination; requires expansion and verification."
+    },
+    {
+      "id": "suspicious-message",
+      "input_type": "message",
+      "input": "URGENT: your bank account is suspended. Share the OTP now and pay the processing fee with a gift card. Verify at https://bank-secure-login.example/verify before midnight.",
+      "label": "suspicious",
+      "rationale": "Combines urgency, credential/OTP request, payment demand and a brand-like domain."
+    }
+  ],
+  "metrics": [
+    "risk classification per case",
+    "coverage and confidence",
+    "evidence IDs cited by the explanation",
+    "false-positive review for the benign cases",
+    "unavailable external sources recorded per run"
+  ]
+}
