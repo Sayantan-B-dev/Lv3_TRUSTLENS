@@ -1,0 +1,51 @@
+# Render blueprint for the TrustLens API + embedded worker.
+# Set the sync:false values in the Render dashboard; never commit real secrets.
+services:
+  - type: web
+    name: trustlens-api
+    runtime: python
+    plan: free
+    region: singapore
+    rootDir: services/backend
+    buildCommand: pip install -r requirements.txt && alembic upgrade head
+    startCommand: uvicorn trustlens.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /ready
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.15"
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: FRONTEND_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: WORKER_ENABLED
+        value: "true"
+      - key: AI_PROVIDER
+        value: auto
+      - key: AI_API_KEY
+        sync: false
+      - key: THREAT_INTEL_ENABLED
+        value: "true"
+      - key: CT_LOOKUP_ENABLED
+        value: "true"
+      - key: CHAIN_CONTRACT_ADDRESS
+        sync: false
+      - key: CHAIN_RPC_URL
+        sync: false
+      - key: CHAIN_PRIVATE_KEY
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        sync: false

@@ -1,0 +1,21 @@
+{
+  "name": "trustlens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TrustLens — evidence-first web threat detection and digital trust intelligence",
+  "scripts": {
+    "dev:web": "pnpm --dir apps/web dev",
+    "dev:api": "cd services/backend && python -m uvicorn trustlens.main:app --reload --port 8000",
+    "build:web": "pnpm --dir apps/web build",
+    "lint:web": "pnpm --dir apps/web lint",
+    "typecheck:web": "pnpm --dir apps/web typecheck",
+    "test:web": "pnpm --dir apps/web test",
+    "test:api": "cd services/backend && python -m pytest",
+    "db:migrate": "cd services/backend && alembic upgrade head",
+    "test:contracts": "pnpm --dir contracts test",
+    "test:e2e": "pnpm --dir apps/web test:e2e",
+    "compile:contracts": "pnpm --dir contracts build",
+    "chain:node": "pnpm --dir contracts node",
+    "chain:deploy": "pnpm --dir contracts deploy:local"
+  }
+}
