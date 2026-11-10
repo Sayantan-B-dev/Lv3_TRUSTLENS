@@ -1,0 +1,46 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-b2f810a4c72ac72fb551f6bcf566c487f962befd",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "compilerType": "solc",
+  "userSourceNameMap": {
+    "contracts/ReportRegistry.sol": "project/contracts/ReportRegistry.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/ReportRegistry.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28;\n\n/// @title TrustLens Report Registry\n/// @notice Stores only a SHA-256 digest commitment for a TrustLens report.\n/// @dev No URLs, messages, personal data or evidence bodies are stored on-chain.\ncontract ReportRegistry {\n    struct Report {\n        bytes32 digest;\n        address submitter;\n        uint64 timestamp;\n        uint32 revision;\n    }\n\n    mapping(bytes32 => Report) private _reports;\n\n    address public owner;\n    uint256 public totalReports;\n\n    event ReportRegistered(\n        bytes32 indexed reportRef,\n        bytes32 indexed digest,\n        address indexed submitter,\n        uint64 timestamp,\n        uint32 revision\n    );\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    error Unauthorized();\n    error ZeroDigest();\n    error ZeroReportRef();\n    error AlreadyRegistered(bytes32 reportRef);\n    error InvalidOwner();\n\n    modifier onlyOwner() {\n        if (msg.sender != owner) revert Unauthorized();\n        _;\n    }\n\n    constructor() {\n        owner = msg.sender;\n        emit OwnershipTransferred(address(0), msg.sender);\n    }\n\n    /// @notice Register a report commitment. Revisions use a new reportRef.\n    function register(bytes32 reportRef, bytes32 digest) external onlyOwner {\n        if (reportRef == bytes32(0)) revert ZeroReportRef();\n        if (digest == bytes32(0)) revert ZeroDigest();\n        if (_reports[reportRef].timestamp != 0) revert AlreadyRegistered(reportRef);\n\n        _reports[reportRef] = Report({\n            digest: digest,\n            submitter: msg.sender,\n            timestamp: uint64(block.timestamp),\n            revision: 1\n        });\n        totalReports += 1;\n        emit ReportRegistered(reportRef, digest, msg.sender, uint64(block.timestamp), 1);\n    }\n\n    /// @notice Returns the committed digest, or zero if never registered.\n    function getDigest(bytes32 reportRef) external view returns (bytes32) {\n        return _reports[reportRef].digest;\n    }\n\n    function getReport(\n        bytes32 reportRef\n    ) external view returns (bytes32 digest, address submitter, uint64 timestamp, uint32 revision) {\n        Report memory report = _reports[reportRef];\n        return (report.digest, report.submitter, report.timestamp, report.revision);\n    }\n\n    function transferOwnership(address newOwner) external onlyOwner {\n        if (newOwner == address(0)) revert InvalidOwner();\n        address previous = owner;\n        owner = newOwner;\n        emit OwnershipTransferred(previous, newOwner);\n    }\n}\n"
+      }
+    }
+  }
+}

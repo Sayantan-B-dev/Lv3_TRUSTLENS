@@ -1,0 +1,16 @@
+{
+  "G:\\code\\Web techs\\projects\\HackMatrix\\contracts\\contracts\\ReportRegistry.sol": {
+    "jobHash": "solc-0_8_28-b2f810a4c72ac72fb551f6bcf566c487f962befd",
+    "isolated": false,
+    "compilerType": "solc",
+    "artifactPaths": [
+      "G:\\code\\Web techs\\projects\\HackMatrix\\contracts\\artifacts\\contracts\\ReportRegistry.sol\\ReportRegistry.json"
+    ],
+    "buildInfoPath": "G:\\code\\Web techs\\projects\\HackMatrix\\contracts\\artifacts\\build-info\\solc-0_8_28-b2f810a4c72ac72fb551f6bcf566c487f962befd.json",
+    "buildInfoOutputPath": "G:\\code\\Web techs\\projects\\HackMatrix\\contracts\\artifacts\\build-info\\solc-0_8_28-b2f810a4c72ac72fb551f6bcf566c487f962befd.output.json",
+    "typeFilePath": "G:\\code\\Web techs\\projects\\HackMatrix\\contracts\\artifacts\\contracts\\ReportRegistry.sol\\artifacts.d.ts",
+    "wasm": false,
+    "artifactsDirectory": "G:\\code\\Web techs\\projects\\HackMatrix\\contracts\\artifacts",
+    "emitsTypeDeclarations": true
+  }
+}

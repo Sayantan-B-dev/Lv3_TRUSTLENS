@@ -1,1 +1,41 @@
-master_plan.md
+# Dependencies
+node_modules/
+
+# Environment variables
+*.env
+*.env.local
+*.env.*
+
+# Dependency lock file (committed if using pnpm)
+pnpm-lock.yaml
+
+# Build artifacts
+dist/
+*.tsbuildinfo
+
+# IDE and editor directories
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+
+# Logs
+*.log
+
+# Reports and exports
+reports/
+
+# Database files (never commit real databases)
+*.db
+*.sqlite
+*.sqlite3
+
+# Certificate and key files (never commit real keys)
+*.key
+*.pem
+*.crt
+*.cer
+
+# Handoff archives
+.handoff/
